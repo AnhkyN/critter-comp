@@ -10,18 +10,6 @@
   font-family: 'Moo Lah Lah', cursive;
 }
 
-@font-face {
-  font-family: 'Coral Pixels';
-  src: url('/fonts/CoralPixels-Regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-.font-coral-pixels {
-  font-family: 'Coral Pixels', sans-serif;
-}
-
 :root {
   --background: #ffffff;
   --foreground: #171717;
