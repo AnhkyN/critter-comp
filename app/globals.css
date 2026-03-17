@@ -1,4 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Oi&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Moo+Lah+Lah&display=swap');
 @import "tailwindcss";
+
+.font-oi {
+  font-family: 'Oi', sans-serif;
+}
+
+.font-moo {
+  font-family: 'Moo Lah Lah', cursive;
+}
+
+@font-face {
+  font-family: 'Coral Pixels';
+  src: url('/fonts/CoralPixels-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+.font-coral-pixels {
+  font-family: 'Coral Pixels', sans-serif;
+}
 
 :root {
   --background: #ffffff;
