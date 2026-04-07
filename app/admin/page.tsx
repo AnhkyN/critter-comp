@@ -13,13 +13,17 @@ export default function AdminPage() {
   // Tracks loading state
   const [loading, setLoading] = useState(false)
 
+  // Preview
+  const [preview, setPreview] = useState<string | null>(null)
+
   const handleUpload = async () => {
     if (!file) return
 
     setLoading(true)
 
     // Create unique filename
-    const fileName = `${Date.now()}-${file.name}`
+    const fileExt = file.name.split(".").pop()
+    const fileName = `${Date.now()}.${fileExt}`
 
     // Upload image to Supabase storage
     const { error: storageError } = await supabase.storage
@@ -58,14 +62,15 @@ export default function AdminPage() {
     return
     }
 
+    // Clean up preview memory
+    if (preview) URL.revokeObjectURL(preview)
+    setPreview(null)
+
     // Reset form
     setFile(null)
     setCaption("")
     setLoading(false)
-
-    // Redirect to homepage after upload
-    window.location.href = "/"
-  }
+    }
 
   return (
     <main className="min-h-screen bg-[#f3ffc7] p-6">
@@ -75,9 +80,24 @@ export default function AdminPage() {
         type="file"
         accept="image/*"
         capture="environment"
-        onChange={(e) => setFile(e.target.files?.[0] || null)}
+        onChange={(e) => {
+          const selectedFile = e.target.files?.[0] || null
+          setFile(selectedFile)
+
+          if (selectedFile) {
+            setPreview(URL.createObjectURL(selectedFile))
+          }
+        }}
         className="mb-4"
       />
+
+      {preview && (
+        <img
+          src={preview}
+          alt="preview"
+          className="mb-4 rounded-lg max-h-80 object-cover"
+        />
+      )}
 
       <input
         type="text"
@@ -89,10 +109,10 @@ export default function AdminPage() {
 
       <button
         onClick={handleUpload}
-        disabled={loading}
-        className="bg-green-700 text-white px-4 py-2 rounded"
+        disabled={loading || !file}
+        className="bg-green-700 text-white px-4 py-2 rounded disabled:opacity-50"
       >
-        {loading ? "Uploading..." : "Upload"}
+        {loading ? "Posting..." : "Post Critter 🐾"}
       </button>
     </main>
   )
